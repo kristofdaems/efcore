@@ -781,6 +781,30 @@ GO
     }
 
     [ConditionalFact]
+    public virtual void SqlOperation_handles_go_with_space()
+    {
+        Generate(
+            new SqlOperation { Sql = "-- I" + EOL + "go   " });
+
+        AssertSql(
+            """
+-- I
+""");
+
+    }
+    [ConditionalFact]
+    public virtual void SqlOperation_handles_go_with_linebreak()
+    {
+        Generate(
+            new SqlOperation { Sql = "-- I" + EOL + "go" + EOL });
+
+        AssertSql(
+            """
+-- I
+""");
+    }
+
+    [ConditionalFact]
     public virtual void SqlOperation_ignores_non_go()
     {
         Generate(
